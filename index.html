@@ -53,6 +53,9 @@
     <div class="label">Texte de la disposition</div>
     <p id="texte"></p>
 
+    <div class="label">Jurisprudence du Tribunal fédéral</div>
+    <ul id="jurisprudence"></ul>
+    
     <p class="muted" id="status"></p>
   </div>
 
@@ -95,6 +98,21 @@
             `${data.code} ${data.article} – ${data.intitule}`;
 
           document.getElementById("texte").textContent = data.texte;
+
+          const list = document.getElementById("jurisprudence");
+          list.innerHTML = "";
+
+          if (data.jurisprudence && data.jurisprudence.length > 0) {
+            data.jurisprudence.forEach(j => {
+              const li = document.createElement("li");
+              li.innerHTML = `<strong>${j.reference}</strong> (${j.annee}) – ${j.principe}
+                <br><a href="${j.lien}" target="_blank" rel="noopener noreferrer">Lire l’arrêt</a>`;
+              list.appendChild(li);
+          });
+          } else {
+            list.innerHTML = "<li>Aucune jurisprudence référencée.</li>";
+          }
+
           status.textContent = "";
         })
         .catch(error => {

@@ -3,6 +3,13 @@
   "article": "123",
   "intitule": "Lésions corporelles simples",
   "texte": "Texte de l'article (placeholder)",
-  "jurisprudence": [],
+  "jurisprudence": [
+  {
+    "reference": "ATF 129 III 290",
+    "annee": 2003,
+    "principe": "Résumé descriptif (placeholder).",
+    "lien": "https://www.bger.ch/..."
+   }
+  ]
   "mots_cles": []
 }

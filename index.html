@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>RatioLegis</title>
+  <style>
+    body {
+      font-family: serif;
+      max-width: 800px;
+      margin: 40px auto;
+      line-height: 1.6;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    .article {
+      margin-top: 30px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RatioLegis</h1>
+  <p><em>Loi et jurisprudence du Tribunal fédéral</em></p>
+
+  <div class="article">
+    <h2 id="intitule">Chargement…</h2>
+
+    <div class="label">Texte de la disposition</div>
+    <p id="texte"></p>
+  </div>
+
+  <script>
+    fetch("data/CP_123.json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("intitule").textContent =
+          data.code + " " + data.article + " – " + data.intitule;
+
+        document.getElementById("texte").textContent =
+          data.texte;
+      })
+      .catch(error => {
+        document.getElementById("intitule").textContent =
+          "Erreur de chargement";
+
+        document.getElementById("texte").textContent =
+          "Impossible de charger la fiche.";
+      });
+  </script>
+
+</body>
+</html>

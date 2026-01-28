@@ -9,20 +9,31 @@
       max-width: 800px;
       margin: 40px auto;
       line-height: 1.6;
+      padding: 0 16px;
     }
-
-    h1 {
-      margin-bottom: 0;
-    }
-
-    .article {
-      margin-top: 30px;
-    }
-
-    .label {
-      font-weight: bold;
+    h1 { margin-bottom: 0; }
+    .search {
       margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
     }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 14px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .article { margin-top: 30px; }
+    .label { font-weight: bold; margin-top: 20px; }
+    .muted { color: #555; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -30,30 +41,80 @@
   <h1>RatioLegis</h1>
   <p><em>Loi et jurisprudence du Tribunal fédéral</em></p>
 
+  <div class="search">
+    <div class="muted">Entrer une référence (ex: <strong>LCA 40</strong>, <strong>CP 123</strong>)</div>
+    <input id="ref" type="text" placeholder="LCA 40" value="LCA 40" />
+    <button id="go">Afficher</button>
+  </div>
+
   <div class="article">
-    <h2 id="intitule">Chargement…</h2>
+    <h2 id="intitule">—</h2>
 
     <div class="label">Texte de la disposition</div>
     <p id="texte"></p>
+
+    <p class="muted" id="status"></p>
   </div>
 
   <script>
-    fetch("data/LCA_40.json")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("intitule").textContent =
-          data.code + " " + data.article + " – " + data.intitule;
+    function refToFilename(ref) {
+      // Normalise: "  lca   40 " -> "LCA_40.json"
+      const cleaned = ref.trim().toUpperCase().replace(/\s+/g, " ");
+      const parts = cleaned.split(" ");
+      if (parts.length !== 2) return null;
 
-        document.getElementById("texte").textContent =
-          data.texte;
-      })
-      .catch(error => {
-        document.getElementById("intitule").textContent =
-          "Erreur de chargement";
+      const code = parts[0];
+      const article = parts[1];
 
-        document.getElementById("texte").textContent =
-          "Impossible de charger la fiche.";
-      });
+      // très simple: article doit être un nombre (ex: 40, 123)
+      if (!/^\d+$/.test(article)) return null;
+
+      return `data/${code}_${article}.json`;
+    }
+
+    function load(ref) {
+      const filename = refToFilename(ref);
+      const status = document.getElementById("status");
+
+      if (!filename) {
+        document.getElementById("intitule").textContent = "Référence invalide";
+        document.getElementById("texte").textContent = "Veuillez entrer une référence du type “LCA 40” ou “CP 123”.";
+        status.textContent = "";
+        return;
+      }
+
+      status.textContent = `Chargement : ${filename}`;
+
+      fetch(filename)
+        .then(response => {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById("intitule").textContent =
+            `${data.code} ${data.article} – ${data.intitule}`;
+
+          document.getElementById("texte").textContent = data.texte;
+          status.textContent = "";
+        })
+        .catch(error => {
+          document.getElementById("intitule").textContent = "Erreur de chargement";
+          document.getElementById("texte").textContent =
+            "Impossible de charger la fiche. Vérifie que le fichier JSON existe dans /data et que son contenu est valide.";
+          status.textContent = "";
+        });
+    }
+
+    document.getElementById("go").addEventListener("click", () => {
+      load(document.getElementById("ref").value);
+    });
+
+    document.getElementById("ref").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") load(document.getElementById("ref").value);
+    });
+
+    // charge par défaut
+    load(document.getElementById("ref").value);
   </script>
 
 </body>

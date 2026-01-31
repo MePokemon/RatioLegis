@@ -1,20 +1,20 @@
 {
-  "code": "CO", 
-  "article": "1", 
-  "intitule": "Formation du contrat", 
-  "texte": "Art. 1 CO \n\nLe contrat est parfait lorsque les parties ont, réciproquement et d’une manière concordante, manifesté leur volonté.\n\nCette manifestation peut être expresse ou tacite."
+  "code": "CO",
+  "article": "1",
+  "intitule": "Formation du contrat",
+  "texte": "Texte (placeholder)\n\nIci tu mettras le texte officiel plus tard, avec des retours à la ligne si tu veux.",
   "jurisprudence": [
     {
-      "reference": "ATF 999 I 999", 
-      "annee": 1999, 
-      "date_publication": "1999-01-01", 
-      "langue": "fr"
+      "reference": "ATF 999 I 999",
+      "annee": 2099,
+      "date_publication": "2099-01-01",
+      "langue": "fr",
       "principe": "Phrase descriptive (placeholder) : ce que l’arrêt traite, sans analyse.",
       "lien": "https://www.bger.ch/"
     }
-  ], 
-  "mots_cle": [
-    "contrat", 
+  ],
+  "mots_cles": [
+    "contrat",
     "offre",
     "acceptation"
   ]

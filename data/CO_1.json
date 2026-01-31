@@ -11,6 +11,14 @@
       "langue": "fr",
       "principe": "Phrase descriptive (placeholder) : ce que l’arrêt traite, sans analyse.",
       "lien": "https://www.bger.ch/"
+    },
+     {
+      "reference": "ATF 888 I 888",
+      "annee": 2099,
+      "date_publication": "2088-01-01",
+      "langue": "de",
+      "principe": "Phrase descriptive (placeholder) : ce que l’arrêt traite, sans analyse.",
+      "lien": "https://www.bger.ch/"
     }
   ],
   "mots_cles": [

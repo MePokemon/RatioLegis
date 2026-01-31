@@ -28,10 +28,14 @@
     margin-top: 8px;
     box-sizing: border-box;
   }
-  jurisprudence {
-    margin-top: 10px;
-  }
-  texte { white-space: pre-wrap; }
+ #jurisprudence {
+  margin-top: 10px;
+}
+
+#texte {
+  white-space: pre-wrap;
+}
+
   button {
     margin-top: 10px;
     padding: 10px 14px;
@@ -103,22 +107,58 @@
       status.textContent = `Chargement : ${filename}`;
 
       fetch(filename)
-        .then(response => {
-          if (!response.ok) throw new Error("HTTP " + response.status);
-          return response.json();
-        })
-        .then(data => {
-         const list = document.getElementById("jurisprudence");
-list.innerHTML = "";
+       .then(data => {
+  document.getElementById("intitule").textContent =
+    `${data.code} ${data.article} – ${data.intitule}`;
 
-const juris = (data.jurisprudence || []).slice();
+  document.getElementById("texte").textContent = data.texte;
 
-// Tri: plus récent d'abord, si date_publication existe
-juris.sort((a, b) => {
-  const da = a.date_publication ? new Date(a.date_publication) : new Date(0);
-  const db = b.date_publication ? new Date(b.date_publication) : new Date(0);
-  return db - da;
-});
+  const list = document.getElementById("jurisprudence");
+  list.innerHTML = "";
+
+  const juris = (data.jurisprudence || []).slice();
+
+  // Tri: plus récent d'abord, si date_publication existe
+  juris.sort((a, b) => {
+    const da = a.date_publication ? new Date(a.date_publication) : new Date(0);
+    const db = b.date_publication ? new Date(b.date_publication) : new Date(0);
+    return db - da;
+  });
+
+  function formatDate(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString("fr-CH");
+  }
+
+  function badgeLang(lang) {
+    const l = (lang || "").toUpperCase();
+    if (!l) return "";
+    return `<span style="display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;margin-left:8px;">${l}</span>`;
+  }
+
+  if (juris.length > 0) {
+    juris.forEach(j => {
+      const li = document.createElement("li");
+      const date = formatDate(j.date_publication);
+      li.style.marginBottom = "10px";
+      li.innerHTML = `
+        <div>
+          <strong>${j.reference}</strong> (${j.annee || "—"}) ${badgeLang(j.langue)}
+        </div>
+        <div style="font-size:14px;color:#555;">Publié : ${date}</div>
+        <div>${j.principe || ""}</div>
+        <div><a href="${j.lien}" target="_blank" rel="noopener noreferrer">Lire l’arrêt</a></div>
+      `;
+      list.appendChild(li);
+    });
+  } else {
+    list.innerHTML = "<li>Aucune jurisprudence référencée.</li>";
+  }
+
+  status.textContent = "";
+})
 
 function formatDate(iso) {
   if (!iso) return "—";

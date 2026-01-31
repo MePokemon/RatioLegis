@@ -3,19 +3,15 @@
   "article": "123",
   "intitule": "Lésions corporelles simples",
   "texte": "Texte de l'article (placeholder)",
- "jurisprudence": [
-  {
-    "reference": "ATF 129 III 290",
-    "annee": 2003,
-    "date_publication": "2003-05-12",
-    "langue": "de",
-    "principe": "Résumé descriptif (placeholder).",
-    "lien": "https://www.bger.ch/..."
+  "jurisprudence": [
+    {
+      "reference": "ATF 129 III 290",
+      "annee": 2003,
+      "date_publication": "2003-05-12",
+      "langue": "de",
+      "principe": "Résumé descriptif (placeholder).",
+      "lien": "https://www.bger.ch/"
     }
   ],
-  "mots_cles": [
-    "poursuite sur plainte",
-    "poursuite d'office",
-    "peine pécuniaire",
-    "objets dangereux"
-  ]
+  "mots_cles": []
+}

@@ -3,14 +3,15 @@
   "article": "40",
   "intitule": "Prétentions frauduleuses",
   "texte": "Texte de l'article (placeholder)",
-
-  "jurisprudence": [
+   "jurisprudence": [
     {
       "reference": "ATF 129 III 290",
       "annee": 2003,
-      "principe": "Le Tribunal fédéral précise les conditions de la prétention frauduleuse au sens de l’art. 40 LCA.",
-      "lien": "https://www.bger.ch/ext/eurospider/live/fr/php/aza/http/index.php?lang=fr&type=show_document&highlight_docid=atf%3A%2F%2F129-III-290"
-    }
+      "date_publication": "2003-05-12",
+      "langue": "de",
+      "principe": "Résumé descriptif (placeholder).",
+      "lien": "https://www.bger.ch/..."
+      }
   ],
 
   "mots_cles": [
